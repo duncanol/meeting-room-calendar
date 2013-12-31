@@ -5,55 +5,68 @@
 <body>
   <h1>Meeting Room bookings</h1>
   
-  <p>
-    The idea of this little application will be to allow an administrator to
-    administer a list of Meeting Rooms and for normal users to be able to
-    book those meeting rooms for slots of time. 
-  </p>
-  
-  <p>
-    Functionality will be tackled in the below order:
-    <ol>
-      <li>Add new Meeting Room</li>
-      <li>Edit Meeting Room</li>
-      <li>Remove Meeting Room</li>
-      <li>Make it look nice so far - introduce Bootstrap</li>
-      <li>Reorder files and folders to make development nicer</li>
-      <li>Book a slot for a Meeting Room</li>
-      <li>Cancel a booking</li>
-      <li>Try to make it look nice again!</li>
-      <li>Adding User accounts and permissions</li>
-      <li>Security - removing rapid prototyping features</li>
-      <li>Deploying to node.js server</li>
-      <li>Deploying to Meteor infrastructure</li>
-    </ol>
-  </p>
-  
-  <h2>Current state of our application</h2>
-  <p>
-    So far all we have is:
-    <ul>
-      <li>this static piece of HTML being served by Meteor</li>
-      <li>a barebones javascript file with logging on both the client- and server-side</li>
-      <li>a default folder structure with room for improvement</li>
-    </ul>
-  </p>
-  
-  <h3>Things to talk about</h3>
-  <p>
-    <ul>
-      <li>What is Meteor?</li>
-      <li>Current state</li>
-      <li>What is Node.js?</li>
-      <li>Starting a project</li>
-    </ul>
-  </p>
-  
-  <h3>Things to experiment with</h3>
-  <p>
-    <ul>
-      <li>Try some live HTML and javascript changes with various clients!</li>
-    </ul>
-  </p>
+  {{> intro}}
   
 </body>
+
+
+<template name="intro">
+
+  {{#if showIntro}}
+    <p>
+      The idea of this little application will be to allow an administrator to
+      administer a list of Meeting Rooms and for normal users to be able to
+      book those meeting rooms for slots of time. 
+    </p>
+    
+    <p>
+      Functionality will be tackled in the below order:
+      <ol>
+        <li>Add new Meeting Room</li>
+        <li>Edit Meeting Room</li>
+        <li>Remove Meeting Room</li>
+        <li>Make it look nice so far - introduce Bootstrap</li>
+        <li>Reorder files and folders to make development nicer</li>
+        <li>Book a slot for a Meeting Room</li>
+        <li>Cancel a booking</li>
+        <li>Try to make it look nice again!</li>
+        <li>Adding User accounts and permissions</li>
+        <li>Security - removing rapid prototyping features</li>
+        <li>Deploying to node.js server</li>
+        <li>Deploying to Meteor infrastructure</li>
+      </ol>
+    </p>
+    
+    <h2>Current state of our application</h2>
+    <p>
+      Now we have:
+      <ul>
+        <li>the intro text served by a conditional template (using Handlebars templating within a Meteor &lt;template&gt; element)</li>
+        <li>a Template function based upon a <i>reactive data source</i> (Meteor Session variable &quot;showintro&quot;)</li>
+      </ul>
+    </p>
+    
+    <h3>Things to talk about</h3>
+    <p>
+      <ul>
+        <li>Templates</li>
+        <li>The way Meteor packages up HTML and javascript for its clients - html elements versus template elements</li>
+        <li>Doing it manually - Meteor.render() - vendor tools for adding support for other templating mechanisms</li>
+        <li>Starting a project</li>
+      </ul>
+    </p>
+    
+    <h3>Things to experiment with</h3>
+    <p>
+      <ul>
+        <li>Try some live HTML and javascript changes with various clients!</li>
+      </ul>
+    </p>
+    
+  {{else}}  
+    
+    <p>Not much going on here anymore... why not try putting Session.set('showIntro', true) into the browser javascript console?</p>
+    
+  {{/if}}
+  
+</template>
