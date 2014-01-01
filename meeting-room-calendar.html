@@ -27,7 +27,7 @@
       Functionality will be tackled in the below order:
       <ol>
         <li class="task-complete">Add new Meeting Room</li>
-        <li>Edit Meeting Room</li>
+        <li class="task-complete">Edit Meeting Room</li>
         <li>Remove Meeting Room</li>
         <li>Make it look nice so far - introduce Bootstrap</li>
         <li>Reorder files and folders to make development nicer</li>
@@ -45,34 +45,31 @@
     <p>
       Now we have:
       <ul>
-        <li>A reactive template that updates the view of assets when the underlying collection updates</li>
-        <li>Some groundbreaking CSS</li>
+        <li>Edit functionality for the Assets that we've added</li>
       </ul>
     </p>
     
     <h3>Things to talk about</h3>
     <p>
       <ul>
-        <li>Allow / deny on collections</li>
-        <li>Handlebar template looping and scopes</li>
+        <li>Update syntax for Mongo</li>
+        <li>Update validation and the Mongo update modifiers</li>
       </ul>
     </p>
     
     <h3>Things to experiment with</h3>
     <p>
       <ul>
-        <li>Use the new functionality to add some Meeting Rooms and view the results</li>
+        <li>Use the new functionality to edit some Meeting Rooms and view the results</li>
         <li>Check that the validation rules don't allow duplicate asset names to be entered</li>
         <li>Try watching this with multiple browsers</li>
-        <li>Try adding a record from the mongo CLI</li>
+        <li>Try updating a record from the mongo CLI</li>
       </ul>
     </p>
     
   {{else}}  
 
-    <p>A view of our assets Collection is now implemented.  Just a very simple list of their names.</p>
-    
-    <p>We've got some validation on the insert and update of asset names to ensure that they're unique as well.</p> 
+    <p>Editing of Assets is now implemented.  Click on an existing Asset name to edit it.</p>
     
     {{> assetlist}}
     
@@ -89,6 +86,11 @@
   {{/if}}
   
   {{#each assets}}
-    <span class="asset-title">{{name}}</span>
+    {{#if editingAsset _id}}
+      <input type="text" id="edit-asset-textfield" value="{{name}}" data-asset-id="{{_id}}" 
+             placeholder="Edit the asset name" size="40"/>
+    {{else}}
+      <span class="asset-title" data-asset-id="{{_id}}">{{name}}</span>
+    {{/if}}
   {{/each}}
 </template>

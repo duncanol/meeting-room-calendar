@@ -2,15 +2,15 @@ assets = new Meteor.Collection('assets');
 
 assets.allow({
     insert: function (userId, doc) {
-        return uniqueName(doc);
+        return uniqueName(doc.name);
     },
     update: function (userId, doc, fields, modifier) {
-        return uniqueName(doc);
+        return uniqueName(modifier['$set'].name);
     }
 });
 
-var uniqueName = function(doc) {
-    return assets.find({name: doc.name}).count() == 0;
+var uniqueName = function(assetName) {
+    return assets.find({name: assetName}).count() == 0;
 };
 
 if (Meteor.isClient) {
@@ -38,17 +38,19 @@ if (Meteor.isClient) {
     //
     // The assetlist Template
     //
+
+    // access to the asset Collection
+    Template.assetlist.assets = function() {
+        return assets.find({});
+    };
+
+    //
+    // Adding assets
+    //
     Template.assetlist.addingAsset = function() {
         return Session.equals('addingAsset', true);
     };
 
-    //
-    // Access to the asset Collection
-    //
-    Template.assetlist.assets = function() {
-        return assets.find({});
-    };
-    
     Template.assetlist.events({
         
         // clicking the Add Asset button
@@ -84,6 +86,58 @@ if (Meteor.isClient) {
         // clicking out of the textfield will cancel the action of adding an asset
         'focusout #add-asset-textfield': function() {
             Session.set('addingAsset', false);
+        }
+    });
+    
+
+    //
+    // Editing Assets
+    //
+    Template.assetlist.editingAsset = function(assetId) {
+        return Session.equals('editingAssetId', assetId);
+    };
+    
+    Template.assetlist.events({
+        
+        // clicking the Add Asset button
+        'click span.asset-title': function(e) {
+            
+            // set addingAsset variable to true and force an instant update of the DOM so we can set 
+            // the focus on the textfield that will appear
+            Session.set('editingAssetId', e.target.getAttribute('data-asset-id'));
+            Meteor.flush();
+            
+            // and set the focus into the new textfield
+            document.getElementById('edit-asset-textfield').focus();
+        },
+    
+        // hitting the Enter key in the Add Meeting Room textfield will add a non-empty Meeting Room 
+        // to the list.  Hitting Escape will cancel
+        'keyup #edit-asset-textfield' : function(e, t) {
+    
+            // enter key
+            if (e.which === 13) {
+                var value = String(e.target.value || "");
+                if (value) {
+                    assets.update({
+                        '_id': e.target.getAttribute('data-asset-id')
+                    }, { 
+                        $set: {
+                            'name' : value
+                        } 
+                    });
+                    Session.set('editingAssetId', null);
+                }
+            }
+            // escape key
+            else if (e.which === 27) {
+                Session.set('editingAssetId', false);
+            }
+        },
+    
+        // clicking out of the textfield will cancel the action of adding an asset
+        'focusout #edit-asset-textfield': function() {
+            Session.set('editingAssetId', null);
         }
     });
 }
