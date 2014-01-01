@@ -45,35 +45,54 @@
     <p>
       Now we have:
       <ul>
-        <li>a new empty collection in which to hold our roome</li>
+        <li>Event handlers and reactive templates to allow us to create new Assets in the database</li>
       </ul>
     </p>
     
     <h3>Things to talk about</h3>
     <p>
       <ul>
-        <li>Client- and server-side visibility of Collection</li>
-        <li>Persistent collections with Minimongo</li>
-        <li>Local and server caching and sync</li>
-        <li>Eventual consistency</li>
-        <li>CLI - &quot;meteor mongo&quot;</li>
+        <li>Meh...</li>
       </ul>
     </p>
     
     <h3>Things to experiment with</h3>
     <p>
       <ul>
-        <li>Add and remove items from one browser and watch updates in other browsers</li>
-        <li>Perform updates direct to Mongo via CLI</li>
+        <li>Use the new functionality to add some Meeting Rooms</li>
+        <li>Check manually for new entries in the assets Collection</li>
       </ul>
     </p>
     
   {{else}}  
     
-    <p>A persistent Collection has been added for our Meeting Room list - have a play with it in the console!  It&lsquo;s called &quot;assets&quot;</p>
-    <p>Try some of the client- and server-side database API.  find({}), findOne({}), count(), insert({...}), remove({...}) etc.</p>
-    <p>Then check out some more of the blurb in the Intro.</p>
+    <p>An &quot;Add&quot; button has been added to add Assets to our &quot;assets&quot; collection.</p>
+    
+    <p>
+       A click event handler sets an addingAsset variable to true, which triggers the template to switch the 
+       button out for a textfield in which we can enter our Asset name.
+    </p>
+    
+    <p>
+       A key handler is added to handle key presses inside the textfield.  Enter will create a new Asset in 
+       the collection, and Escape will cancel the adding of a new Asset.
+    </p>
+     
+    <p>
+      A focusout event handler cancels the adding of an Asset if the textfield is clicked out of.
+    </p>
+    
+    {{> assetlist}}
     
   {{/if}}
   
+</template>
+
+<template name="assetlist">
+  
+  {{#if addingAsset}}
+    <input type="text" id="add-asset-textfield" placeholder="Enter an asset name" size="40"/>
+  {{else}}
+    <button id="add-asset-button">+</button>
+  {{/if}}
 </template>
