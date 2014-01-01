@@ -28,7 +28,7 @@
       <ol>
         <li class="task-complete">Add new Meeting Room</li>
         <li class="task-complete">Edit Meeting Room</li>
-        <li>Remove Meeting Room</li>
+        <li class="task-complete">Remove Meeting Room</li>
         <li>Make it look nice so far - introduce Bootstrap</li>
         <li>Reorder files and folders to make development nicer</li>
         <li>Book a slot for a Meeting Room</li>
@@ -52,24 +52,23 @@
     <h3>Things to talk about</h3>
     <p>
       <ul>
-        <li>Update syntax for Mongo</li>
-        <li>Update validation and the Mongo update modifiers</li>
+        <li>Adding remove function allow list on assets collection</li>
+        <li>Clash between Edit Asset textfield focusout and Remove link click events - necessity for timeout</li>
       </ul>
     </p>
     
     <h3>Things to experiment with</h3>
     <p>
       <ul>
-        <li>Use the new functionality to edit some Meeting Rooms and view the results</li>
-        <li>Check that the validation rules don't allow duplicate asset names to be entered</li>
+        <li>Use the new functionality to remove some Meeting Rooms and view the results</li>
         <li>Try watching this with multiple browsers</li>
-        <li>Try updating a record from the mongo CLI</li>
+        <li>Try removing a record from the mongo CLI</li>
       </ul>
     </p>
     
   {{else}}  
 
-    <p>Editing of Assets is now implemented.  Click on an existing Asset name to edit it.</p>
+    <p>Removing of Assets is now implemented.  Click on an existing Asset name to pop up the Remove link and click it.</p>
     
     {{> assetlist}}
     
@@ -89,6 +88,7 @@
     {{#if editingAsset _id}}
       <input type="text" id="edit-asset-textfield" value="{{name}}" data-asset-id="{{_id}}" 
              placeholder="Edit the asset name" size="40"/>
+      <a href="#" class="remove-asset" data-asset-id="{{_id}}">Remove</a>
     {{else}}
       <span class="asset-title" data-asset-id="{{_id}}">{{name}}</span>
     {{/if}}

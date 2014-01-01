@@ -6,6 +6,9 @@ assets.allow({
     },
     update: function (userId, doc, fields, modifier) {
         return uniqueName(modifier['$set'].name);
+    },
+    remove: function (userId, doc, fields, modifier) {
+        return true;
     }
 });
 
@@ -137,9 +140,20 @@ if (Meteor.isClient) {
     
         // clicking out of the textfield will cancel the action of adding an asset
         'focusout #edit-asset-textfield': function() {
-            Session.set('editingAssetId', null);
+            window.setTimeout(function() { 
+                Session.set('editingAssetId', null);
+            }, 100);
         }
     });
+    
+    Template.assetlist.events({
+        
+        // clicking the Remove Asset button
+        'click a.remove-asset': function(e) {
+            assets.remove({'_id': e.target.getAttribute('data-asset-id')});
+        }
+    });
+    
 }
 
 if (Meteor.isServer) {
