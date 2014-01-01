@@ -12,6 +12,10 @@
 
 <template name="intro">
 
+  <button id="show-intro-toggle">
+    {{#if showIntro}} Hide intro {{else}} Show intro {{/if}}
+  </button>
+
   {{#if showIntro}}
     <p>
       The idea of this little application will be to allow an administrator to
@@ -49,23 +53,20 @@
     <h3>Things to talk about</h3>
     <p>
       <ul>
-        <li>Templates</li>
-        <li>The way Meteor packages up HTML and javascript for its clients - html elements versus template elements</li>
-        <li>Doing it manually - Meteor.render() - vendor tools for adding support for other templating mechanisms</li>
-        <li>Starting a project</li>
+        <li>Events - &quot;reactions&quot;</li>
       </ul>
     </p>
     
     <h3>Things to experiment with</h3>
     <p>
       <ul>
-        <li>Try some live HTML and javascript changes with various clients!</li>
+        <li>Look at other event types e.g. timers etc</li>
       </ul>
     </p>
     
   {{else}}  
     
-    <p>Not much going on here anymore... why not try putting Session.set('showIntro', true) into the browser javascript console?</p>
+    <p>You've successfully hidden the intro by invoking an event handler on the "intro" template!</p>
     
   {{/if}}
   

@@ -5,6 +5,16 @@ if (Meteor.isClient) {
     Template.intro.showIntro = function() {
         return Session.equals("showIntro", true);
     };
+    
+    Template.intro.events({
+        'click #show-intro-toggle': function() {
+            if (Template.intro.showIntro()) {
+                Session.set('showIntro', false);
+            } else {
+                Session.set('showIntro', true);
+            }
+        }
+    });
 }
 
 if (Meteor.isServer) {
