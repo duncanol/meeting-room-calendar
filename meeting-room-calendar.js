@@ -1,5 +1,18 @@
 assets = new Meteor.Collection('assets');
 
+assets.allow({
+    insert: function (userId, doc) {
+        return uniqueName(doc);
+    },
+    update: function (userId, doc, fields, modifier) {
+        return uniqueName(doc);
+    }
+});
+
+var uniqueName = function(doc) {
+    return assets.find({name: doc.name}).count() == 0;
+};
+
 if (Meteor.isClient) {
     console.log("The client is ready!");
     
@@ -27,6 +40,13 @@ if (Meteor.isClient) {
     //
     Template.assetlist.addingAsset = function() {
         return Session.equals('addingAsset', true);
+    };
+
+    //
+    // Access to the asset Collection
+    //
+    Template.assetlist.assets = function() {
+        return assets.find({});
     };
     
     Template.assetlist.events({
@@ -72,5 +92,7 @@ if (Meteor.isServer) {
   Meteor.startup(function () {
     // code to run on server at startup
       console.log("The server is ready!");
+      
+      
   });
 }

@@ -26,7 +26,7 @@
     <p>
       Functionality will be tackled in the below order:
       <ol>
-        <li>Add new Meeting Room</li>
+        <li class="task-complete">Add new Meeting Room</li>
         <li>Edit Meeting Room</li>
         <li>Remove Meeting Room</li>
         <li>Make it look nice so far - introduce Bootstrap</li>
@@ -45,42 +45,34 @@
     <p>
       Now we have:
       <ul>
-        <li>Event handlers and reactive templates to allow us to create new Assets in the database</li>
+        <li>A reactive template that updates the view of assets when the underlying collection updates</li>
+        <li>Some groundbreaking CSS</li>
       </ul>
     </p>
     
     <h3>Things to talk about</h3>
     <p>
       <ul>
-        <li>Meh...</li>
+        <li>Allow / deny on collections</li>
+        <li>Handlebar template looping and scopes</li>
       </ul>
     </p>
     
     <h3>Things to experiment with</h3>
     <p>
       <ul>
-        <li>Use the new functionality to add some Meeting Rooms</li>
-        <li>Check manually for new entries in the assets Collection</li>
+        <li>Use the new functionality to add some Meeting Rooms and view the results</li>
+        <li>Check that the validation rules don't allow duplicate asset names to be entered</li>
+        <li>Try watching this with multiple browsers</li>
+        <li>Try adding a record from the mongo CLI</li>
       </ul>
     </p>
     
   {{else}}  
+
+    <p>A view of our assets Collection is now implemented.  Just a very simple list of their names.</p>
     
-    <p>An &quot;Add&quot; button has been added to add Assets to our &quot;assets&quot; collection.</p>
-    
-    <p>
-       A click event handler sets an addingAsset variable to true, which triggers the template to switch the 
-       button out for a textfield in which we can enter our Asset name.
-    </p>
-    
-    <p>
-       A key handler is added to handle key presses inside the textfield.  Enter will create a new Asset in 
-       the collection, and Escape will cancel the adding of a new Asset.
-    </p>
-     
-    <p>
-      A focusout event handler cancels the adding of an Asset if the textfield is clicked out of.
-    </p>
+    <p>We've got some validation on the insert and update of asset names to ensure that they're unique as well.</p> 
     
     {{> assetlist}}
     
@@ -95,4 +87,8 @@
   {{else}}
     <button id="add-asset-button">+</button>
   {{/if}}
+  
+  {{#each assets}}
+    <span class="asset-title">{{name}}</span>
+  {{/each}}
 </template>
