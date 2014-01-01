@@ -45,28 +45,34 @@
     <p>
       Now we have:
       <ul>
-        <li>the intro text served by a conditional template (using Handlebars templating within a Meteor &lt;template&gt; element)</li>
-        <li>a Template function based upon a <i>reactive data source</i> (Meteor Session variable &quot;showintro&quot;)</li>
+        <li>a new empty collection in which to hold our roome</li>
       </ul>
     </p>
     
     <h3>Things to talk about</h3>
     <p>
       <ul>
-        <li>Events - &quot;reactions&quot;</li>
+        <li>Client- and server-side visibility of Collection</li>
+        <li>Persistent collections with Minimongo</li>
+        <li>Local and server caching and sync</li>
+        <li>Eventual consistency</li>
+        <li>CLI - &quot;meteor mongo&quot;</li>
       </ul>
     </p>
     
     <h3>Things to experiment with</h3>
     <p>
       <ul>
-        <li>Look at other event types e.g. timers etc</li>
+        <li>Add and remove items from one browser and watch updates in other browsers</li>
+        <li>Perform updates direct to Mongo via CLI</li>
       </ul>
     </p>
     
   {{else}}  
     
-    <p>You've successfully hidden the intro by invoking an event handler on the "intro" template!</p>
+    <p>A persistent Collection has been added for our Meeting Room list - have a play with it in the console!  It&lsquo;s called &quot;assets&quot;</p>
+    <p>Try some of the client- and server-side database API.  find({}), findOne({}), count(), insert({...}), remove({...}) etc.</p>
+    <p>Then check out some more of the blurb in the Intro.</p>
     
   {{/if}}
   

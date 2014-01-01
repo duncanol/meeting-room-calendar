@@ -1,3 +1,5 @@
+assets = new Meteor.Collection('assets');
+
 if (Meteor.isClient) {
     console.log("The client is ready!");
     
