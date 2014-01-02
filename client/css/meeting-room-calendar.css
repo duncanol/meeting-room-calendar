@@ -1,0 +1,7 @@
+body {
+	background-image: url('/images/escheresque.png');
+}
+
+li.task-complete {
+	text-decoration: line-through;
+}
