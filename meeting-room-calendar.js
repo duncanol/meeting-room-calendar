@@ -103,7 +103,7 @@ if (Meteor.isClient) {
     Template.assetlist.events({
         
         // clicking the Add Asset button
-        'click span.asset-title': function(e) {
+        'click .asset-title': function(e) {
             
             // set addingAsset variable to true and force an instant update of the DOM so we can set 
             // the focus on the textfield that will appear
@@ -149,7 +149,7 @@ if (Meteor.isClient) {
     Template.assetlist.events({
         
         // clicking the Remove Asset button
-        'click a.remove-asset': function(e) {
+        'click .remove-asset': function(e) {
             assets.remove({'_id': e.target.getAttribute('data-asset-id')});
         }
     });

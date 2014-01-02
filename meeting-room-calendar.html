@@ -12,7 +12,7 @@
 
 <template name="intro">
 
-  <button id="show-intro-toggle">
+  <button id="show-intro-toggle" class="btn">
     {{#if showIntro}} Hide intro {{else}} Show intro {{/if}}
   </button>
 
@@ -29,7 +29,7 @@
         <li class="task-complete">Add new Meeting Room</li>
         <li class="task-complete">Edit Meeting Room</li>
         <li class="task-complete">Remove Meeting Room</li>
-        <li>Make it look nice so far - introduce Bootstrap</li>
+        <li class="task-complete">Make it look nice so far - introduce Bootstrap</li>
         <li>Reorder files and folders to make development nicer</li>
         <li>Book a slot for a Meeting Room</li>
         <li>Cancel a booking</li>
@@ -45,30 +45,29 @@
     <p>
       Now we have:
       <ul>
-        <li>Edit functionality for the Assets that we've added</li>
+        <li>Twitter Bootstrap added as a package</li>
       </ul>
     </p>
     
     <h3>Things to talk about</h3>
     <p>
       <ul>
-        <li>Adding remove function allow list on assets collection</li>
-        <li>Clash between Edit Asset textfield focusout and Remove link click events - necessity for timeout</li>
+        <li>Adding packages with &quot;meteor add&quot;</li>
+        <li>Available packages with &quot;meteor list&quot;</li>
+        <li>Atmosphere community and Meteorite</li>
       </ul>
     </p>
     
     <h3>Things to experiment with</h3>
     <p>
       <ul>
-        <li>Use the new functionality to remove some Meeting Rooms and view the results</li>
-        <li>Try watching this with multiple browsers</li>
-        <li>Try removing a record from the mongo CLI</li>
+        <li>Meh... desperately try to make page look good</li>
       </ul>
     </p>
     
   {{else}}  
 
-    <p>Removing of Assets is now implemented.  Click on an existing Asset name to pop up the Remove link and click it.</p>
+    <p>Twitter Bootstrap has now been added as a package.  Doesn&lsquo;t it look gorgeous?</p>
     
     {{> assetlist}}
     
@@ -78,19 +77,22 @@
 
 <template name="assetlist">
   
-  {{#if addingAsset}}
-    <input type="text" id="add-asset-textfield" placeholder="Enter an asset name" size="40"/>
-  {{else}}
-    <button id="add-asset-button">+</button>
-  {{/if}}
+  <div class="btn-group">
   
-  {{#each assets}}
-    {{#if editingAsset _id}}
-      <input type="text" id="edit-asset-textfield" value="{{name}}" data-asset-id="{{_id}}" 
-             placeholder="Edit the asset name" size="40"/>
-      <a href="#" class="remove-asset" data-asset-id="{{_id}}">Remove</a>
+    {{#if addingAsset}}
+      <input type="text" id="add-asset-textfield" placeholder="Enter an asset name" size="40"/>
     {{else}}
-      <span class="asset-title" data-asset-id="{{_id}}">{{name}}</span>
+      <button id="add-asset-button" class="btn">+</button>
     {{/if}}
-  {{/each}}
+    
+    {{#each assets}}
+      {{#if editingAsset _id}}
+        <input type="text" id="edit-asset-textfield" value="{{name}}" data-asset-id="{{_id}}" 
+               placeholder="Edit the asset name" size="40"/>
+        <button class="remove-asset" data-asset-id="{{_id}}">Remove</button>
+      {{else}}
+        <button class="asset-title btn" data-asset-id="{{_id}}">{{name}}</button>
+      {{/if}}
+    {{/each}}
+  </div>
 </template>

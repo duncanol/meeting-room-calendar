@@ -1,9 +1,3 @@
-span.asset-title {
-	border: 0;
-	padding-right: 4px 0 4px 0;
-	background-color: #EEE;
-}
-
 li.task-complete {
 	text-decoration: line-through;
 }
