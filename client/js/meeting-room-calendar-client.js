@@ -1,5 +1,12 @@
 console.log("The client is ready!");
 
+var MeetingRooms = {
+    assets: function() {
+        return assets.find({});
+    }
+};
+
+
 //
 // The intro Template
 //
@@ -24,9 +31,7 @@ Template.intro.events({
 //
 
 // access to the asset Collection
-Template.assetlist.assets = function() {
-    return assets.find({});
-};
+Template.assetlist.assets = MeetingRooms.assets;
 
 //
 // Adding assets
@@ -134,3 +139,24 @@ Template.assetlist.events({
         assets.remove({'_id': e.target.getAttribute('data-asset-id')});
     }
 });
+
+//
+// Calendar time periods
+//
+Template.assetbookings.timePeriods = function() {
+    var periods = new Array(24 * 2);
+    var date = new Date();
+    date.setHours(0, 0, 0, 0);
+    
+    for (var i = 0; i < periods.length; i++) {
+        periods[i] = { 
+            
+            label: date.toTimeString().substring(0, 5),
+        };
+        date = new Date(date.getTime() + 30*60*1000);
+    }
+    
+    return periods;
+};
+
+Template.assetbookings.assets = MeetingRooms.assets;

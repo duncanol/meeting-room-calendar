@@ -1,0 +1,41 @@
+<template name="assetlist">
+  
+  <th>
+    {{#if addingAsset}}
+      <input type="text" id="add-asset-textfield" placeholder="Enter an asset name" size="40"/>
+    {{else}}
+      <button id="add-asset-button" class="btn">+</button>
+    {{/if}}
+  </th>    
+
+  {{#each assets}}
+    <th>
+      {{#if editingAsset _id}}
+        <input type="text" id="edit-asset-textfield" value="{{name}}" data-asset-id="{{_id}}" 
+               placeholder="Edit the asset name" size="40"/>
+        <button class="remove-asset" data-asset-id="{{_id}}">Remove</button>
+      {{else}}
+        <span class="asset-title" data-asset-id="{{_id}}">{{name}}</span>
+      {{/if}}
+    </th>
+  {{/each}}
+          
+</template>
+
+
+<template name="assetbookings">
+
+  {{#each timePeriods}}
+    <tr>
+      <th>
+        {{label}}
+      </th>
+      {{#each assets}}
+        <td title="Book {{name}} for {{../label}}">
+          &nbsp;
+        </td>
+      {{/each}}
+    </tr>
+  {{/each}}
+            
+</template>
