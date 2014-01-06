@@ -1,5 +1,15 @@
 console.log("The client is ready!");
 
+var TemplateScopes = {};
+
+Handlebars.registerHelper('setScope', function(name) {
+    TemplateScopes[name] = this; 
+});
+
+Handlebars.registerHelper('get', function(scope, field) {
+    return TemplateScopes[scope][field]; 
+});
+
 var MeetingRooms = {
     assets: function() {
         return assets.find({});
@@ -150,7 +160,7 @@ Template.assetbookings.timePeriods = function() {
     
     for (var i = 0; i < periods.length; i++) {
         periods[i] = { 
-            
+            date: date,
             label: date.toTimeString().substring(0, 5),
         };
         date = new Date(date.getTime() + 30*60*1000);
@@ -160,6 +170,24 @@ Template.assetbookings.timePeriods = function() {
 };
 
 Template.assetbookings.assets = MeetingRooms.assets;
+
+Template.assetbookings.bookingStarts = function(assetId, timePeriod) {
+    
+    var endOfPeriod = new Date(timePeriod.getTime() + (30 * 60 * 1000));
+    var existingBooking = bookings.findOne({assetId: assetId, from: {$gte: timePeriod, $lt: endOfPeriod}});
+    
+    if (existingBooking == null) {
+        return null;
+    }
+    
+    existingBooking.numberOfPeriods = (existingBooking.to.getTime() - existingBooking.from.getTime()) / 1000 / 60 / 30;
+    return existingBooking;
+};
+
+Template.assetbookings.noBooking = function(assetId, timePeriod) {
+    var existingBooking = bookings.findOne({assetId: assetId, from: {$lte: timePeriod}, to: {$gt: timePeriod}});
+    return existingBooking == null;
+};
 
 Template.assetbookings.events({
    'click .booking-period': function(e) {

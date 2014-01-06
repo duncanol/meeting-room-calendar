@@ -45,7 +45,7 @@
       <p>
         Now we have:
         <ul>
-          <li>A booking mechanism but no way yet of viewing them from the UI.</li>
+          <li>A booking mechanism and a template that shows the bookings in the table.</li>
         </ul>
       </p>
     </div>  
@@ -54,8 +54,8 @@
       <h3>Things to talk about</h3>
       <p>
         <ul>
-          <li>Semi-relational linking between Asset records and booking records.  More support for constraints in Mongo?</li>
-          <li>Could have bookings as a list field within each Asset record instead of having its own Collection.  Queries?</li>
+          <li>Come on Handlebars!!!  We can't name the scopes of nested blocks?!</li>
+          <li>Handlebars.registerHelper()</li>
         </ul>
       </p>
     </div>
@@ -64,8 +64,8 @@
       <h3>Things to experiment with</h3>
       <p>
         <ul>
-          <li>Different constraints in Mongo</li>
-          <li>Advanced Mongo queries</li>
+          <li>Add some new bookings.  Watch on multiple browsers.</li>
+          <li>Handlebars&lsquo; lack of variable setters.  Any ideas?  Ember.js seems to allow you to...</li>
         </ul>
       </p>
     </div>
@@ -74,12 +74,10 @@
 
     <div class="alert alert-info">
       <p>
-        jQuery has now been installed as a package and booking functionality added as a simple 
-        Bootstrap modal with input fields.
+        Logic has now been put into the template to show our current bookings.
       </p>
       <p>
-        Bookings are being persisted in the database but not yet viewable from the UI.  They 
-        can be checked out manually though in the mongo CLI or via the console.  
+        Handlebars is making life hard within the nested loops to reference variables from different scopes.  To access parent scopes you can use "..", but this is very ugly.  Using custom helper methods to name scopes is not much better.
       </p>
     </div>
     

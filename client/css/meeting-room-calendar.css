@@ -5,3 +5,7 @@ li.task-complete {
 .table {
 	background-color: #FFF;
 }
+
+td.booked {
+	background-color: pink !important;
+}

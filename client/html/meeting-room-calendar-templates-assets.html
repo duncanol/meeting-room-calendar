@@ -26,15 +26,31 @@
 <template name="assetbookings">
 
   {{#each timePeriods}}
+    {{setScope 'period' }}
     <tr>
       <th>
         {{label}}
       </th>
       {{#each assets}}
-        <td title="Book {{name}} for {{../label}}" class="booking-period" 
-            data-period="{{../label}}" data-asset-name="{{name}}" data-asset-id="{{_id}}">
-          &nbsp;
-        </td>
+        {{setScope 'asset' }}
+        {{#with bookingStarts _id ../date}}
+        
+          <td title="{{get 'asset' 'name'}} booked at {{get 'period' 'label'}}" class="booking-period booked" 
+              data-period="{{get 'period' 'label'}}" data-asset-name="{{get 'asset' 'name'}}" data-asset-id="{{get 'asset' '_id'}}"
+              rowspan="{{numberOfPeriods}}">
+              Booked
+          </td>
+        {{/with}}
+        
+        {{#if noBooking _id ../date}}
+          
+          <td title="Book {{get 'asset' 'name'}} at {{get 'period' 'label'}}" class="booking-period free" 
+              data-period="{{get 'period' 'label'}}" data-asset-name="{{get 'asset' 'name'}}" data-asset-id="{{get 'asset' '_id'}}">
+              &nbsp;
+          </td>
+          
+        {{/if}}
+        
       {{/each}}
     </tr>
   {{/each}}
