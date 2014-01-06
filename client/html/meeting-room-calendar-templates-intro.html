@@ -45,7 +45,7 @@
       <p>
         Now we have:
         <ul>
-          <li>A nicely separated application - or is it???</li>
+          <li>A booking mechanism but no way yet of viewing them from the UI.</li>
         </ul>
       </p>
     </div>  
@@ -54,16 +54,8 @@
       <h3>Things to talk about</h3>
       <p>
         <ul>
-          <li>The various supported folders:
-            <ul>
-              <li>client</li>
-              <li>server</li>
-              <li>public</li>
-              <li>private</li>
-              <li>anything else</li>
-              <li>nested folders</li>
-            </ul>
-          </li>
+          <li>Semi-relational linking between Asset records and booking records.  More support for constraints in Mongo?</li>
+          <li>Could have bookings as a list field within each Asset record instead of having its own Collection.  Queries?</li>
         </ul>
       </p>
     </div>
@@ -72,9 +64,8 @@
       <h3>Things to experiment with</h3>
       <p>
         <ul>
-          <li>How can we make the code separation nicer?</li>
-          <li>Is it nicer this way or was it clearer before?</li>
-          <li>How to structure for multi-page application?</li>
+          <li>Different constraints in Mongo</li>
+          <li>Advanced Mongo queries</li>
         </ul>
       </p>
     </div>
@@ -82,7 +73,14 @@
   {{else}}  
 
     <div class="alert alert-info">
-      <p>The source has now been separated into different folders in a structure supported by Meteor.</p>
+      <p>
+        jQuery has now been installed as a package and booking functionality added as a simple 
+        Bootstrap modal with input fields.
+      </p>
+      <p>
+        Bookings are being persisted in the database but not yet viewable from the UI.  They 
+        can be checked out manually though in the mongo CLI or via the console.  
+      </p>
     </div>
     
   {{/if}}
