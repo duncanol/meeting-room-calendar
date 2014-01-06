@@ -171,6 +171,7 @@ Template.assetbookings.bookingStatusOfAssetAndPeriod = function(assetId, timePer
     
     var bookingStatus = {
         assetName: assets.findOne({_id: assetId}).name,
+        assetId: assetId,
         period: CalendarFunctions.formatTime(timePeriod)
     };
     
