@@ -165,6 +165,10 @@ Template.assetbookings.timePeriods = function() {
     return periods;
 };
 
+Accounts.ui.config({
+    passwordSignupFields: 'USERNAME_AND_OPTIONAL_EMAIL'
+});
+
 Template.assetbookings.assets = MeetingRooms.assets;
 
 Template.assetbookings.bookingStatusOfAssetAndPeriod = function(assetId, timePeriod) {
