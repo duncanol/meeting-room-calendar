@@ -32,24 +32,25 @@
         {{label}}
       </th>
       {{#each assets}}
-        {{setScope 'asset' }}
-        {{#with bookingStarts _id ../date}}
+      
+        {{#with bookingStatusOfAssetAndPeriod _id ../date}}
         
-          <td title="{{get 'asset' 'name'}} booked at {{get 'period' 'label'}}" class="booking-period booked" 
-              data-period="{{get 'period' 'label'}}" data-asset-name="{{get 'asset' 'name'}}" data-asset-id="{{get 'asset' '_id'}}"
-              rowspan="{{numberOfPeriods}}">
-              Booked
-          </td>
-        {{/with}}
-        
-        {{#if noBooking _id ../date}}
-          
-          <td title="Book {{get 'asset' 'name'}} at {{get 'period' 'label'}}" class="booking-period free" 
-              data-period="{{get 'period' 'label'}}" data-asset-name="{{get 'asset' 'name'}}" data-asset-id="{{get 'asset' '_id'}}">
+          {{#if startingInThisPeriod}}
+            <td title="{{assetName}} booked at {{period}}" class="booking-period booked" 
+                data-period="{{period}}" data-asset-name="{{assetName}}" data-asset-id="{{assetId}}"
+                rowspan="{{numberOfPeriods}}">
+                Booked
+            </td>
+          {{/if}}
+      
+          {{#if free}}
+            <td title="Book {{assetName}} at {{period}}" class="booking-period free" 
+              data-period="{{period}}" data-asset-name="{{assetName}}" data-asset-id="{{assetId}}">
               &nbsp;
-          </td>
-          
-        {{/if}}
+            </td>
+          {{/if}}
+      
+        {{/with}}
         
       {{/each}}
     </tr>

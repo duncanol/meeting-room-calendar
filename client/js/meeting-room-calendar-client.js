@@ -1,14 +1,10 @@
 console.log("The client is ready!");
 
-var TemplateScopes = {};
-
-Handlebars.registerHelper('setScope', function(name) {
-    TemplateScopes[name] = this; 
-});
-
-Handlebars.registerHelper('get', function(scope, field) {
-    return TemplateScopes[scope][field]; 
-});
+var CalendarFunctions = {
+    formatTime: function(date) {
+       return date.toTimeString().substring(0, 5);
+    }
+};
 
 var MeetingRooms = {
     assets: function() {
@@ -161,7 +157,7 @@ Template.assetbookings.timePeriods = function() {
     for (var i = 0; i < periods.length; i++) {
         periods[i] = { 
             date: date,
-            label: date.toTimeString().substring(0, 5),
+            label: CalendarFunctions.formatTime(date),
         };
         date = new Date(date.getTime() + 30*60*1000);
     }
@@ -171,22 +167,30 @@ Template.assetbookings.timePeriods = function() {
 
 Template.assetbookings.assets = MeetingRooms.assets;
 
-Template.assetbookings.bookingStarts = function(assetId, timePeriod) {
+Template.assetbookings.bookingStatusOfAssetAndPeriod = function(assetId, timePeriod) {
+    
+    var bookingStatus = {
+        assetName: assets.findOne({_id: assetId}).name,
+        period: CalendarFunctions.formatTime(timePeriod)
+    };
     
     var endOfPeriod = new Date(timePeriod.getTime() + (30 * 60 * 1000));
-    var existingBooking = bookings.findOne({assetId: assetId, from: {$gte: timePeriod, $lt: endOfPeriod}});
+    var startingInThisPeriod = bookings.findOne({assetId: assetId, from: {$gte: timePeriod, $lt: endOfPeriod}});
     
-    if (existingBooking == null) {
-        return null;
+    if (startingInThisPeriod != null) {
+        bookingStatus.startingInThisPeriod = true;
+        bookingStatus.numberOfPeriods = (startingInThisPeriod.to.getTime() - startingInThisPeriod.from.getTime()) / 1000 / 60 / 30;
+        return bookingStatus;
     }
     
-    existingBooking.numberOfPeriods = (existingBooking.to.getTime() - existingBooking.from.getTime()) / 1000 / 60 / 30;
-    return existingBooking;
-};
-
-Template.assetbookings.noBooking = function(assetId, timePeriod) {
-    var existingBooking = bookings.findOne({assetId: assetId, from: {$lte: timePeriod}, to: {$gt: timePeriod}});
-    return existingBooking == null;
+    var continuingInThisPeriod = bookings.findOne({assetId: assetId, from: {$lte: timePeriod}, to: {$gt: timePeriod}});
+    
+    if (continuingInThisPeriod == null) {
+        bookingStatus.free = true;
+        return bookingStatus;
+    }
+    
+    return bookingStatus;
 };
 
 Template.assetbookings.events({
