@@ -15,3 +15,5 @@ assets.allow({
 var uniqueName = function(assetName) {
     return assets.find({name: assetName}).count() == 0;
 };
+
+bookings = new Meteor.Collection('bookings');

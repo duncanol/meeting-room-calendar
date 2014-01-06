@@ -160,3 +160,40 @@ Template.assetbookings.timePeriods = function() {
 };
 
 Template.assetbookings.assets = MeetingRooms.assets;
+
+Template.assetbookings.events({
+   'click .booking-period': function(e) {
+       var assetName = e.target.getAttribute('data-asset-name');
+       var assetId = e.target.getAttribute('data-asset-id');
+       var from = e.target.getAttribute('data-period');
+       var modal = jQuery('#asset-booking-modal');
+       modal.find('.asset-name').val(assetName);
+       modal.find('.asset-id').val(assetId);
+       modal.find('.from').val(from);
+       modal.modal(true);
+   }
+});
+
+//
+// Booking modal
+//
+Template.assetbookingmodal.events({
+   'click .btn-primary': function(e) {
+       var modal = jQuery('#asset-booking-modal');
+       var assetId = modal.find('.asset-id').val();
+       var from = modal.find('.from').val();
+       var to = modal.find('.to').val();
+       
+       var fromHour = from.split(':')[0];
+       var fromMins = from.split(':')[1];
+       var toHour = to.split(':')[0];
+       var toMins = to.split(':')[1];
+       
+       var fromDate = new Date();
+       var toDate = new Date();
+       fromDate.setHours(fromHour, fromMins, 0, 0);
+       toDate.setHours(toHour, toMins, 0, 0);
+       
+       bookings.insert({assetId: assetId, from: fromDate, to: toDate});
+   }
+});
