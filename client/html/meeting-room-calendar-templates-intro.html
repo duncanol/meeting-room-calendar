@@ -30,7 +30,7 @@
           <li class="task-complete">Make it look nice so far - introduce Bootstrap</li>
           <li class="task-complete">Reorder files and folders to make development nicer</li>
           <li class="task-complete">Book a slot for a Meeting Room</li>
-          <li>Adding User accounts and permissions</li>
+          <li class="task-complete">Adding User accounts and permissions</li>
           <li>Security - removing rapid prototyping features</li>
           <li>Deploying to node.js server</li>
           <li>Deploying to Meteor infrastructure</li>
@@ -45,8 +45,8 @@
       <p>
         Now we have:
         <ul>
-          <li>Simple out-of-the-box User Accounts added as packages and a slight tweak of the HTML.</li>
-          <li>accounts-base, accounts-password, accounts-ui</li>
+          <li>Permissions locked down to only allow the admin user to maintain Assets.</li>
+          <li>Only logged in users can make bookings.</li>
         </ul>
       </p>
     </div>  
@@ -55,9 +55,8 @@
       <h3>Things to talk about</h3>
       <p>
         <ul>
-          <li>Out of the box User accounts.</li>
-          <li>Other User account packages e.g. Facebook, Twitter, Google.</li>
-          <li>email package</li>
+          <li>Permissions in UI - Handlebars helper for admin user.</li>
+          <li>Permissions on collections - assets and bookings Collections.</li>
         </ul>
       </p>
     </div>
@@ -66,8 +65,8 @@
       <h3>Things to experiment with</h3>
       <p>
         <ul>
-          <li>Create some accounts.</li>
-          <li>Plugging in other account types?</li>
+          <li>Check the permissions work from the UI perspective.</li>
+          <li>Check they work from using the console.</li>
         </ul>
       </p>
     </div>
@@ -76,8 +75,8 @@
 
     <div class="alert alert-info">
       <p>
-        Handlebars was making life difficult in terms of scopes with nested loops, so restructured template and
-        javascript slightly to make it more readable.
+        Permissions have now been added.  Only the admin user (named &lsquo;admin&lsquo;) can administer Assets
+        and only logged-in users can make bookings.
       </p>
     </div>
     
