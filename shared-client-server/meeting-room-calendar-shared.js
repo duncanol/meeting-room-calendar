@@ -1,14 +1,25 @@
 assets = new Meteor.Collection('assets');
 
+adminUser = function(userId) {
+    var adminUser = Meteor.users.findOne({
+        username : "admin"
+    });
+    return (userId && adminUser && userId === adminUser._id);
+};
+
+adminUserLoggedIn = function() {
+    return adminUser(Meteor.userId());
+};
+
 assets.allow({
     insert: function (userId, doc) {
-        return uniqueName(doc.name);
+        return adminUserLoggedIn() && uniqueName(doc.name);
     },
     update: function (userId, doc, fields, modifier) {
-        return uniqueName(modifier['$set'].name);
+        return adminUserLoggedIn() && uniqueName(modifier['$set'].name);
     },
     remove: function (userId, doc, fields, modifier) {
-        return true;
+        return adminUserLoggedIn();
     }
 });
 
@@ -17,3 +28,16 @@ var uniqueName = function(assetName) {
 };
 
 bookings = new Meteor.Collection('bookings');
+
+assets.allow({
+    insert: function (userId, doc) {
+        return Meteor.userId() != null;
+    },
+    update: function (userId, doc, fields, modifier) {
+        return Meteor.userId() != null;
+    },
+    remove: function (userId, doc, fields, modifier) {
+        // currently cancel booking not implemented, but this should be admin or owner
+        return false;
+    }
+});

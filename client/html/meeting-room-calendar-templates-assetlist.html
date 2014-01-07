@@ -1,10 +1,12 @@
 <template name="assetlist">
   
   <th>
-    {{#if addingAsset}}
-      <input type="text" id="add-asset-textfield" placeholder="Enter an asset name" size="40"/>
-    {{else}}
-      <button id="add-asset-button" class="btn">+</button>
+    {{#if adminUser}}
+      {{#if addingAsset}}
+        <input type="text" id="add-asset-textfield" placeholder="Enter an asset name" size="40"/>
+      {{else}}
+        <button id="add-asset-button" class="btn">+</button>
+      {{/if}}
     {{/if}}
   </th>    
 
