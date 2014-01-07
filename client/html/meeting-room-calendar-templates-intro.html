@@ -33,7 +33,7 @@
           <li class="task-complete">Adding User accounts and permissions</li>
           <li class="task-complete">Security - removing rapid prototyping features</li>
           <li class="task-complete">Deploying to Meteor infrastructure</li>
-          <li>Deploying to node.js server</li>
+          <li class="task-complete">Deploying to node.js server</li>
           <li>Cancel a booking</li>
           <li>Try to make it look nice again!</li>
         </ol>
@@ -45,7 +45,7 @@
       <p>
         Now we have:
         <ul>
-          <li>Application hosted on Meteor servers at meetingrooms.meteor.com.</li>
+          <li>Application hosted on local Node.js server.</li>
         </ul>
       </p>
     </div>  
@@ -54,8 +54,7 @@
       <h3>Things to talk about</h3>
       <p>
         <ul>
-          <li>Deploying to Meteor infrastructure - meteor deploy myapplication.meteor.com.</li>
-          <li>Supporting own domain name - CNAME.</li>
+          <li>Building a Meteor bundle for any Node.js server - meteor bundle myapplication.tgz</li>
           <li>Other hosting solutions - Heroku, AppFog, etc.</li>
         </ul>
       </p>
@@ -65,7 +64,24 @@
       <h3>Things to experiment with</h3>
       <p>
         <ul>
-          <li>Check it out on live!</li>
+          <li>Install Node.js locally (http://nodejs.org/download/)</li>
+          <li>
+            Fire up Node.js as simple Hello World server.
+            <code>
+              <pre>
+                var http = require('http');
+                http.createServer(function (req, res) {
+                  res.writeHead(200, {'Content-Type': 'text/plain'});
+                  res.end('Hello World\n');
+                }).listen(1337, '127.0.0.1');
+                console.log('Server running at http://127.0.0.1:1337/');</pre>
+            </code>
+          </li>
+          <li>Install MongoDB locally (http://docs.mongodb.org/manual/tutorial/install-mongodb-on-ubuntu/)</li>
+          <li>Start MongoDB as a service - sudo service mongodb start</li>
+          <li>From terminal use the CLI, "mongo", then type "use myapplication" to create a new db.</li>
+          <li>Unpack .tgz bundle into a target folder for Node.js applications.</li>
+          <li>Start application on Node.js - PORT=4000 ROOT_URL=http://localhost MONGO_URL=mongodb://localhost:27017/myapplication node bundle/main.js</li>
         </ul>
       </p>
     </div>
@@ -74,7 +90,8 @@
 
     <div class="alert alert-info">
       <p>
-        Meeting Rooms has gone viral!  Check it out at meetingrooms.meteor.com!
+        Meteor applications can be deployed to any Node.js server.  Look at the intro text to see how to host an 
+        application on a Node.js server with a MongoDB installation available.
       </p>
     </div>
     
