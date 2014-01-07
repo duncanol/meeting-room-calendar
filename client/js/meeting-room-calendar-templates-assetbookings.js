@@ -24,7 +24,7 @@ Template.assetbookings.bookingStatusOfAssetAndPeriod = function(assetId, timePer
     var bookingStatus = {
         assetName: assets.findOne({_id: assetId}).name,
         assetId: assetId,
-        period: CalendarFunctions.formatTime(timePeriod)
+        period: CalendarFunctions.formatTime(timePeriod),
     };
     
     var endOfPeriod = new Date(timePeriod.getTime() + (30 * 60 * 1000));
@@ -33,6 +33,7 @@ Template.assetbookings.bookingStatusOfAssetAndPeriod = function(assetId, timePer
     if (startingInThisPeriod != null) {
         bookingStatus.startingInThisPeriod = true;
         bookingStatus.numberOfPeriods = (startingInThisPeriod.to.getTime() - startingInThisPeriod.from.getTime()) / 1000 / 60 / 30;
+        bookingStatus.user = startingInThisPeriod.userId != null ? Meteor.users.findOne({_id: Meteor.userId()}).username : 'anonymous';
         return bookingStatus;
     }
     
@@ -79,6 +80,11 @@ Template.assetbookingmodal.events({
        fromDate.setHours(fromHour, fromMins, 0, 0);
        toDate.setHours(toHour, toMins, 0, 0);
        
-       bookings.insert({assetId: assetId, from: fromDate, to: toDate});
+       bookings.insert({
+           assetId: assetId, 
+           from: fromDate, 
+           to: toDate,
+           userId: Meteor.userId()
+       });
    }
 });
