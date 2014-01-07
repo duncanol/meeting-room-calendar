@@ -31,9 +31,9 @@
           <li class="task-complete">Reorder files and folders to make development nicer</li>
           <li class="task-complete">Book a slot for a Meeting Room</li>
           <li class="task-complete">Adding User accounts and permissions</li>
-          <li>Security - removing rapid prototyping features</li>
-          <li>Deploying to node.js server</li>
+          <li class="task-complete">Security - removing rapid prototyping features</li>
           <li>Deploying to Meteor infrastructure</li>
+          <li>Deploying to node.js server</li>
           <li>Cancel a booking</li>
           <li>Try to make it look nice again!</li>
         </ol>
@@ -45,8 +45,9 @@
       <p>
         Now we have:
         <ul>
-          <li>Permissions locked down to only allow the admin user to maintain Assets.</li>
-          <li>Only logged in users can make bookings.</li>
+          <li>Insecure package removed.</li>
+          <li>Autopublish package removed.</li>
+          <li>Specific control over what information from the server is exposed to the client.</li>
         </ul>
       </p>
     </div>  
@@ -55,8 +56,12 @@
       <h3>Things to talk about</h3>
       <p>
         <ul>
-          <li>Permissions in UI - Handlebars helper for admin user.</li>
-          <li>Permissions on collections - assets and bookings Collections.</li>
+          <li>Rapid prototyping removed - readying for production.</li>
+          <li>Subscribe and autosubscribe.</li>
+          <li>
+              Must be a way to get client to pass userId to server to get back username, rather than exposing
+              all usernames to the client.
+          </li>
         </ul>
       </p>
     </div>
@@ -65,8 +70,7 @@
       <h3>Things to experiment with</h3>
       <p>
         <ul>
-          <li>Check the permissions work from the UI perspective.</li>
-          <li>Check they work from using the console.</li>
+          <li>Check in console that we only have the fields we allowed to be exposed from the server to the client.</li>
         </ul>
       </p>
     </div>
@@ -75,8 +79,8 @@
 
     <div class="alert alert-info">
       <p>
-        Permissions have now been added.  Only the admin user (named &lsquo;admin&lsquo;) can administer Assets
-        and only logged-in users can make bookings.
+        The rapid prototyping packages &lsquo;insecure&lsquo; and &lsquo;autopublish&lsquo; have been removed.
+        We now have full control over what data is exposed to the client from the server.
       </p>
     </div>
     

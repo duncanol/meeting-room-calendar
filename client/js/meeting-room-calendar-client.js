@@ -19,3 +19,13 @@ MeetingRooms = {
         return assets.find({});
     }
 };
+
+//subscribe to changes in assets list - this is the local cache version of the server's collection
+// and only holds the data that we were happy to expose
+Meteor.subscribe("Assets");
+
+//subscribe to changes in bookings
+Meteor.subscribe("Bookings");
+
+//subscribe to changes in users
+Meteor.subscribe("Users");
