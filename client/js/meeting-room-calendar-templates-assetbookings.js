@@ -33,6 +33,7 @@ Template.assetbookings.bookingStatusOfAssetAndPeriod = function(assetId, timePer
     if (startingInThisPeriod != null) {
         bookingStatus.startingInThisPeriod = true;
         bookingStatus.numberOfPeriods = (startingInThisPeriod.to.getTime() - startingInThisPeriod.from.getTime()) / 1000 / 60 / 30;
+        bookingStatus.bookingId = startingInThisPeriod._id;
         
         if (startingInThisPeriod.userId != null) {
             bookingStatus.user = Meteor.users.findOne({_id: startingInThisPeriod.userId}).username;
@@ -52,8 +53,11 @@ Template.assetbookings.bookingStatusOfAssetAndPeriod = function(assetId, timePer
     return bookingStatus;
 };
 
+//
+// Clicking on a bookable slot
+//
 Template.assetbookings.events({
-   'click .booking-period': function(e) {
+   'click .booking-period.free': function(e) {
        
        if (Meteor.userId() == null) {
            return;
@@ -102,4 +106,45 @@ Template.assetbookingmodal.events({
            userId: Meteor.userId()
        });
    }
+});
+
+
+Template.cancelassetbookingmodal.bookingToCancel = function() {
+    return Session.get('bookingToCancel');
+};
+
+//
+// Clicking on a booked slot
+//
+Template.assetbookings.events({
+ 'click .booking-period.booked': function(e) {
+     
+     var bookingId = e.target.getAttribute('data-booking-id');
+     var booking = bookings.find({_id: bookingId});
+     
+     if (!allowedToRemoveBooking(Meteor.userId(), booking)) {
+         return;
+     }
+     
+     Session.set('bookingToCancel', bookingId);
+ }
+});
+
+Template.cancelassetbookingmodal.events({
+    'click .btn-primary': function(e) {
+        var bookingId = Session.get('bookingToCancel');
+        var booking = bookings.find({_id: bookingId});
+        
+        if (!allowedToRemoveBooking(Meteor.userId(), booking)) {
+            return;
+        }
+        
+        bookings.remove({_id: bookingId});
+        
+        Session.set('bookingToCancel', null);
+    },
+    'click *[data-dismiss="modal"]': function(e) {
+        
+        Session.set('bookingToCancel', null);
+    }
 });

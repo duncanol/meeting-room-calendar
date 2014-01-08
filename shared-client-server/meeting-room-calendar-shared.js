@@ -11,6 +11,10 @@ adminUserLoggedIn = function() {
     return adminUser(Meteor.userId());
 };
 
+allowedToRemoveBooking = function(userId, booking) {
+    return adminUser(userId) || booking.userId === userId;
+};
+
 assets.allow({
     insert: function (userId, doc) {
         return adminUserLoggedIn() && uniqueName(doc.name);
@@ -29,7 +33,7 @@ var uniqueName = function(assetName) {
 
 bookings = new Meteor.Collection('bookings');
 
-assets.allow({
+bookings.allow({
     insert: function (userId, doc) {
         return Meteor.userId() != null;
     },
@@ -37,7 +41,6 @@ assets.allow({
         return Meteor.userId() != null;
     },
     remove: function (userId, doc, fields, modifier) {
-        // currently cancel booking not implemented, but this should be admin or owner
-        return false;
+        return allowedToRemoveBooking(userId, doc);
     }
 });
