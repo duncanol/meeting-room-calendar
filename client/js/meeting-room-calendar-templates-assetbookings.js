@@ -120,26 +120,25 @@ Template.assetbookings.events({
  'click .booking-period.booked': function(e) {
      
      var bookingId = e.target.getAttribute('data-booking-id');
-     var booking = bookings.find({_id: bookingId});
+     var booking = bookings.findOne({_id: bookingId});
      
      if (!allowedToRemoveBooking(Meteor.userId(), booking)) {
          return;
      }
      
-     Session.set('bookingToCancel', bookingId);
+     Session.set('bookingToCancel', booking);
  }
 });
 
 Template.cancelassetbookingmodal.events({
     'click .btn-primary': function(e) {
-        var bookingId = Session.get('bookingToCancel');
-        var booking = bookings.find({_id: bookingId});
+        var booking = Session.get('bookingToCancel');
         
         if (!allowedToRemoveBooking(Meteor.userId(), booking)) {
             return;
         }
         
-        bookings.remove({_id: bookingId});
+        bookings.remove({_id: booking._id});
         
         Session.set('bookingToCancel', null);
     },
