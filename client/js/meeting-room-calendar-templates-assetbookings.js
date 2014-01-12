@@ -63,17 +63,26 @@ Template.assetbookings.events({
            return;
        }
        
-       var assetName = e.target.getAttribute('data-asset-name');
        var assetId = e.target.getAttribute('data-asset-id');
+       var asset = assets.findOne({_id: assetId});
        var from = e.target.getAttribute('data-period');
-       var modal = jQuery('#asset-booking-modal');
-       modal.find('.asset-name').val(assetName);
-       modal.find('.asset-id').val(assetId);
-       modal.find('.from').val(from);
-       modal.modal(true);
+
+       Template.assetbookingmodal.setNewBooking({
+           asset: asset,
+           from: from,
+           to: ''
+       });
    }
 });
 
+Template.assetbookingmodal.newBooking = function() {
+    return Session.get('newBooking');  
+};
+
+Template.assetbookingmodal.setNewBooking = function(booking) {
+    Session.set('newBooking', booking);  
+};
+  
 //
 // Booking modal
 //
@@ -84,8 +93,9 @@ Template.assetbookingmodal.events({
            return;
        }
        
+       var newBooking = Template.assetbookingmodal.newBooking();
        var modal = jQuery('#asset-booking-modal');
-       var assetId = modal.find('.asset-id').val();
+       var assetId = newBooking.asset._id;
        var from = modal.find('.from').val();
        var to = modal.find('.to').val();
        
@@ -105,13 +115,13 @@ Template.assetbookingmodal.events({
            to: toDate,
            userId: Meteor.userId()
        });
+       
+       Template.assetbookingmodal.setNewBooking(null);
+   },
+   'click *[data-dismiss="modal"]': function(e) {
+       Template.assetbookingmodal.setNewBooking(null);
    }
 });
-
-
-Template.cancelassetbookingmodal.bookingToCancel = function() {
-    return Session.get('bookingToCancel');
-};
 
 //
 // Clicking on a booked slot
@@ -126,13 +136,25 @@ Template.assetbookings.events({
          return;
      }
      
-     Session.set('bookingToCancel', booking);
+     Template.cancelassetbookingmodal.setBookingToCancel(booking);
  }
 });
 
+
+//
+// Cancelling a booking
+//
+Template.cancelassetbookingmodal.bookingToCancel = function() {
+    return Session.get('bookingToCancel');
+};
+
+Template.cancelassetbookingmodal.setBookingToCancel = function(booking) {
+    Session.set('bookingToCancel', booking);
+};
+
 Template.cancelassetbookingmodal.events({
     'click .btn-primary': function(e) {
-        var booking = Session.get('bookingToCancel');
+        var booking = Template.cancelassetbookingmodal.bookingToCancel();
         
         if (!allowedToRemoveBooking(Meteor.userId(), booking)) {
             return;
@@ -140,10 +162,9 @@ Template.cancelassetbookingmodal.events({
         
         bookings.remove({_id: booking._id});
         
-        Session.set('bookingToCancel', null);
+        Template.cancelassetbookingmodal.setBookingToCancel(null);
     },
     'click *[data-dismiss="modal"]': function(e) {
-        
-        Session.set('bookingToCancel', null);
+        Template.cancelassetbookingmodal.setBookingToCancel(null);
     }
 });

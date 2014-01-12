@@ -38,72 +38,82 @@
 
 <template name="assetbookingmodal">
 
-  <div class="modal hide" id="asset-booking-modal">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-          <h4 class="modal-title">Make a booking</h4>
-        </div>
-        
-        <div class="modal-body">
-
-          <form class="form-horizontal">
-            <div class="control-group">
-              <label class="control-label" for="assetName">Booking</label>
-              <div class="controls">
-                <input type="text" class="asset-name" id="assetName" disabled="disabled">
+  {{#if newBooking}}
+    <div class="modal" id="asset-booking-modal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Make a booking</h4>
+          </div>
+          
+          <div class="modal-body">
+  
+            <form class="form-horizontal">
+              <div class="control-group">
+                <label class="control-label" for="assetName">Booking</label>
+                <div class="controls">
+                  <input type="text" class="asset-name" id="assetName" disabled="disabled" value="{{newBooking.asset.name}}">
+                </div>
               </div>
-            </div>
-            <div class="control-group">
-              <label class="control-label" for="fromTime">From</label>
-              <div class="controls">
-                <input type="text" class="from" id="fromTime" placeholder="From time">
+              <div class="control-group">
+                <label class="control-label" for="fromTime">From</label>
+                <div class="controls">
+                  <input type="text" class="from" id="fromTime" placeholder="From time" value="{{newBooking.from}}">
+                </div>
               </div>
-            </div>
-            <div class="control-group">
-              <label class="control-label" for="toTime">To</label>
-              <div class="controls">
-                <input type="text" class="to" id="toTime" placeholder="To time">
+              <div class="control-group">
+                <label class="control-label" for="toTime">To</label>
+                <div class="controls">
+                  <input type="text" class="to" id="toTime" placeholder="To time" value="{{newBooking.to}}">
+                </div>
               </div>
-            </div>
-            <input type="hidden" class="asset-id" id="assetId">
-          </form>
-
-        </div>
-        
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-primary" data-dismiss="modal">Make booking</button>
+            </form>
+  
+          </div>
+          
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Make booking</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
+    <div class="modal-backdrop in" />
+  
+  {{/if}}
+    
 </template>
-
+    
 <template name="cancelassetbookingmodal">
 
-  <div class="modal {{#unless bookingToCancel}}hide{{/unless}}" id="asset-booking-cancel-modal">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-          <h4 class="modal-title">Cancel booking</h4>
-        </div>
-        
-        <div class="modal-body">
-
-          <p>Are you sure you want to cancel this booking?</p>
-
-        </div>
-        
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
-          <button type="button" class="btn btn-primary" data-dismiss="modal">Yes</button>
+  {{#if bookingToCancel}}
+  
+    <div class="modal" id="asset-booking-cancel-modal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Cancel booking</h4>
+          </div>
+          
+          <div class="modal-body">
+  
+            <p>Are you sure you want to cancel this booking?</p>
+  
+          </div>
+          
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Yes</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
+    <div class="modal-backdrop in" />
+    
+  {{/if}}
+  
 </template>
