@@ -104,8 +104,8 @@ Template.assetbookingmodal.events({
        var toHour = to.split(':')[0];
        var toMins = to.split(':')[1];
        
-       var fromDate = new Date();
-       var toDate = new Date();
+       var fromDate = MeetingRooms.currentDay();
+       var toDate = MeetingRooms.currentDay();
        fromDate.setHours(fromHour, fromMins, 0, 0);
        toDate.setHours(toHour, toMins, 0, 0);
        
