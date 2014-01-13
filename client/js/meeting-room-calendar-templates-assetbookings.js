@@ -3,8 +3,8 @@
 //
 Template.assetbookings.timePeriods = function() {
     var periods = new Array(24 * 2);
-    var date = new Date();
-    date.setHours(0, 0, 0, 0);
+    
+    var date = MeetingRooms.currentDay();
     
     for (var i = 0; i < periods.length; i++) {
         periods[i] = { 

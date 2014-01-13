@@ -25,7 +25,9 @@ MeetingRooms = {
 Meteor.subscribe("Assets");
 
 //subscribe to changes in bookings
-Meteor.subscribe("Bookings");
+Meteor.autosubscribe(function() {
+    Meteor.subscribe("Bookings", Session.get('currentDay'));
+});
 
 //subscribe to changes in users
 Meteor.subscribe("Users");

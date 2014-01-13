@@ -11,8 +11,9 @@ Meteor.publish("Assets", function() {
 });
 
 // return the fields we need around bookings
-Meteor.publish("Bookings", function() {
-    return bookings.find({},{fields:{assetId: 1, userId: 1, from: 1, to: 1}});
+Meteor.publish("Bookings", function(currentDay) {
+    var nextDay = new Date(currentDay.getTime() + (24 * 60 * 60 * 1000));
+    return bookings.find({from: {$gte: currentDay, $lt: nextDay}},{fields:{assetId: 1, userId: 1, from: 1, to: 1}});
 });
 
 // only expose the barest user details to the client
