@@ -35,6 +35,7 @@
           <li class="task-complete">Deploying to Meteor infrastructure</li>
           <li class="task-complete">Deploying to node.js server</li>
           <li class="task-complete">Cancel a booking</li>
+          <li class="task-complete">Change the currently selected day</li>
           <li>Try to make it look nice again!</li>
         </ol>
       </p>
@@ -45,7 +46,7 @@
       <p>
         Now we have:
         <ul>
-          <li>Cancelling of bookings.</li>
+          <li>Control of the currently selected day.</li>
         </ul>
       </p>
     </div>  
@@ -54,13 +55,10 @@
       <h3>Things to talk about</h3>
       <p>
         <ul>
-          <li>
-            Meteor-centric way of controlling Bootstrap modals - for better or worse, opening 
-            and closing them now with template variables rather than jQuery.
-          </li>
-          <li>Annoying lack of control with regards to the order that magic is invoked.</li>
-          <li>No out-of-the-box two way databinding.</li>
-          <li>meteor add angular-stack.  Would this help?</li>
+          <li>Meteor.autosubscribe() returning subset of bookings as current day changes - only for currently selected day.</li>
+          <li>Slowish performance when changing selected day, due to recording complex reactive computations per table cell - how to improve?  
+          <li>Initial performance trade-off versus performance improvement when adding / removing bookings.  Only recalculates cells that need redrawing.</li>
+          <li>Smart DOM updating - only need to update DOM entries where calculations change results.</li>
         </ul>
       </p>
     </div>
@@ -69,7 +67,7 @@
       <h3>Things to experiment with</h3>
       <p>
         <ul>
-          <li>Cancel some bookings!</li>
+          <li>Change the day!</li>
         </ul>
       </p>
     </div>
@@ -78,8 +76,8 @@
 
     <div class="alert alert-info">
       <p>
-        Cancellation of bookings has been added.  Modals made more Meteor-centric by using template variables
-        to control them rather than imperative code.
+        Control of the current day has been added.  Changing the day changes a Session variable which causes the bookings Collection 
+        to be refreshed from the server.
       </p>
     </div>
     
