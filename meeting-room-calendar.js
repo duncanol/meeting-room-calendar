@@ -1,15 +1,13 @@
 if (Meteor.isClient) {
-  Template.hello.greeting = function () {
-    return "Welcome to meeting-room-calendar.";
-  };
-
-  Template.hello.events({
-    'click input' : function () {
-      // template data, if any, is available in 'this'
-      if (typeof console !== 'undefined')
-        console.log("You pressed the button");
-    }
-  });
+    Meteor.startup(function () {
+        
+        // autorun will scan the function below for "Reactive Data sources" and run the supplied function every time that data source changes 
+        Meteor.autorun(function () {
+            var message = Session.get('myMessage');
+            document.getElementById('my-message-placeholder').innerHTML = message;
+            console.log(message);
+        });
+    });
 }
 
 if (Meteor.isServer) {
