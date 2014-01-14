@@ -56,7 +56,14 @@
       <p>
         <ul>
           <li>Meteor.autosubscribe() returning subset of bookings as current day changes - only for currently selected day.</li>
-          <li>Slowish performance when changing selected day, due to recording complex reactive computations per table cell - how to improve?  
+          <li>
+            Slowish performance when changing selected day, due to reactive computation on timePeriods determining that all 
+            timePeriods must be rerendered when currentDay is changed.  Need to remove the need to update these when currentDay changes.
+          </li>
+          <li>
+            However, while fixing above performance issue, need to aviod having to re-render every call to bookingStatusOfAssetAndPeriod, and so cannot
+            reference currentDay in there either.  How to fix???
+          </li>
           <li>Initial performance trade-off versus performance improvement when adding / removing bookings.  Only recalculates cells that need redrawing.</li>
           <li>Smart DOM updating - only need to update DOM entries where calculations change results.</li>
         </ul>
